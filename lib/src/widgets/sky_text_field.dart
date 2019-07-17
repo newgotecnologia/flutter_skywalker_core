@@ -14,9 +14,6 @@ class SkyTextField extends StatelessWidget {
   final bool obscureText;
   final bool deobscureTextIcon;
 
-  final double width;
-  final double height;
-
   final String label;
   final String mask;
 
@@ -49,8 +46,6 @@ class SkyTextField extends StatelessWidget {
     this.mask,
     this.onChanged = _defaultChangeCallback,
     this.labelColor = Colors.blue,
-    this.width = 500,
-    this.height = 50,
   }) : super(key: key);
 
   @override
@@ -76,56 +71,45 @@ class SkyTextField extends StatelessWidget {
               ),
             ),
           ),
-          Container(
-            width: width,
-            height: height,
-            child: FittedBox(
-                fit: BoxFit.cover,
-                child: PlatformTextField(
-                  obscureText: obscureText,
-                  controller: controller,
-                  android: (context) => MaterialTextFieldData(
-                    decoration: InputDecoration(
-                      prefix: prefix,
-                      suffix: suffix,
-                      prefixIcon: prefixIcon,
-                      suffixIcon: suffixIcon,
-                      border: inputBorder,
-                    ),
-                    style: style,
-                  ),
-                  ios: (context) => CupertinoTextFieldData(
-                    prefix: prefix,
-                    suffix: suffix,
-                  ),
-                )),
-          )
+          PlatformTextField(
+            obscureText: obscureText,
+            controller: controller,
+            android: (context) => MaterialTextFieldData(
+              decoration: InputDecoration(
+                prefix: prefix,
+                suffix: suffix,
+                prefixIcon: prefixIcon,
+                suffixIcon: suffixIcon,
+                border: inputBorder,
+              ),
+              style: style,
+            ),
+            ios: (context) => CupertinoTextFieldData(
+              prefix: prefix,
+              suffix: suffix,
+            ),
+          ),
         ],
       );
     } else {
-      return Container(
-          width: width,
-          height: height,
-          child: FittedBox(
-              fit: BoxFit.cover,
-              child: PlatformTextField(
-                obscureText: obscureText,
-                controller: controller,
-                android: (context) => MaterialTextFieldData(
-                  decoration: InputDecoration(
-                    prefix: prefix,
-                    suffix: suffix,
-                    prefixIcon: prefixIcon,
-                    suffixIcon: suffixIcon,
-                    border: inputBorder,
-                  ),
-                  style: style,
-                ),
-                ios: (context) => CupertinoTextFieldData(
-                  prefix: prefix,
-                  suffix: suffix,
-                ),
-              )));
+      return PlatformTextField(
+        obscureText: obscureText,
+        controller: controller,
+        android: (context) => MaterialTextFieldData(
+          decoration: InputDecoration(
+            prefix: prefix,
+            suffix: suffix,
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
+            border: inputBorder,
+          ),
+          style: style,
+        ),
+        ios: (context) => CupertinoTextFieldData(
+          prefix: prefix,
+          suffix: suffix,
+        ),
+      );
     }
   }
 }
