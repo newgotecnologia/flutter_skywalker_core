@@ -44,20 +44,22 @@ class _SkyDropdownButtonState extends State<SkyDropdownButton> {
 
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      fit: BoxFit.cover,
-      child: DropdownButton(
-        items: _dropDownMenuItems,
-        value: _currentItem,
-        onChanged: changedDropDownItem,
-        icon: Icon(
-          Icons.keyboard_arrow_down,
-          color: dropdownIconColor,
-        ),
-        style: TextStyle(fontSize: fontSize, color: textColor),
-        isDense: true,
-      ),
-    );
+    return Container(
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: DropdownButton(
+            items: _dropDownMenuItems,
+            value: _currentItem,
+            onChanged: changedDropDownItem,
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: dropdownIconColor,
+            ),
+            style: TextStyle(fontSize: fontSize, color: textColor),
+            isDense: true,
+          ),
+        ));
   }
 
   List<DropdownMenuItem<String>> getDropDownMenuItems() {

@@ -21,7 +21,7 @@ class SkyText extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return PlatformText(
+    return Text(
       text,
       style: TextStyle(
         fontSize: fontSize,

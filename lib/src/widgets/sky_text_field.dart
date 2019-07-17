@@ -56,40 +56,60 @@ class SkyTextField extends StatelessWidget {
       controller = MaskedTextController(mask: mask);
     }
 
-    return Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: <Widget>[
-        Container(
-          padding: EdgeInsets.symmetric(vertical: 10),
-          child: Text(
-            label,
-            style: TextStyle(
-              fontSize: 16,
-              fontWeight: FontWeight.bold,
-              color: labelColor,
+    if (label != "") {
+      return Column(
+        crossAxisAlignment: CrossAxisAlignment.start,
+        children: <Widget>[
+          Container(
+            padding: EdgeInsets.symmetric(vertical: 10),
+            child: Text(
+              label,
+              style: TextStyle(
+                fontSize: 16,
+                fontWeight: FontWeight.bold,
+                color: labelColor,
+              ),
             ),
           ),
-        ),
-        PlatformTextField(
-          obscureText: obscureText,
-          controller: controller,
-          android: (context) => MaterialTextFieldData(
+          PlatformTextField(
+            obscureText: obscureText,
+            controller: controller,
+            android: (context) => MaterialTextFieldData(
               decoration: InputDecoration(
                 prefix: prefix,
                 suffix: suffix,
                 prefixIcon: prefixIcon,
                 suffixIcon: suffixIcon,
-//              labelText: label,
                 border: inputBorder,
               ),
               style: style,
+            ),
+            ios: (context) => CupertinoTextFieldData(
+              prefix: prefix,
+              suffix: suffix,
+            ),
           ),
-          ios: (context) => CupertinoTextFieldData(
+        ],
+      );
+    } else {
+      return PlatformTextField(
+        obscureText: obscureText,
+        controller: controller,
+        android: (context) => MaterialTextFieldData(
+          decoration: InputDecoration(
             prefix: prefix,
             suffix: suffix,
+            prefixIcon: prefixIcon,
+            suffixIcon: suffixIcon,
+            border: inputBorder,
           ),
+          style: style,
         ),
-      ],
-    );
+        ios: (context) => CupertinoTextFieldData(
+          prefix: prefix,
+          suffix: suffix,
+        ),
+      );
+    }
   }
 }
