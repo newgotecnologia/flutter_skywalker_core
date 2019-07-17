@@ -15,8 +15,8 @@ class SkyDropdownButton extends StatefulWidget {
     this.textColor = Colors.black,
     this.dropdownIconColor = Colors.blue,
     this.fontSize = 15,
-    this.width = double.infinity,
-    this.height = double.infinity,
+    this.width,
+    this.height,
   }) : super(key: key);
 
   @override
