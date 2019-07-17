@@ -49,8 +49,8 @@ class SkyTextField extends StatelessWidget {
     this.mask,
     this.onChanged = _defaultChangeCallback,
     this.labelColor = Colors.blue,
-    this.width,
-    this.height,
+    this.width = 500,
+    this.height = 50,
   }) : super(key: key);
 
   @override
