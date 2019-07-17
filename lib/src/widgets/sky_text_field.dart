@@ -71,7 +71,32 @@ class SkyTextField extends StatelessWidget {
               ),
             ),
           ),
-          PlatformTextField(
+          FittedBox(
+              fit: BoxFit.cover,
+              child: PlatformTextField(
+                obscureText: obscureText,
+                controller: controller,
+                android: (context) => MaterialTextFieldData(
+                  decoration: InputDecoration(
+                    prefix: prefix,
+                    suffix: suffix,
+                    prefixIcon: prefixIcon,
+                    suffixIcon: suffixIcon,
+                    border: inputBorder,
+                  ),
+                  style: style,
+                ),
+                ios: (context) => CupertinoTextFieldData(
+                  prefix: prefix,
+                  suffix: suffix,
+                ),
+              ))
+        ],
+      );
+    } else {
+      return FittedBox(
+          fit: BoxFit.cover,
+          child: PlatformTextField(
             obscureText: obscureText,
             controller: controller,
             android: (context) => MaterialTextFieldData(
@@ -88,28 +113,7 @@ class SkyTextField extends StatelessWidget {
               prefix: prefix,
               suffix: suffix,
             ),
-          ),
-        ],
-      );
-    } else {
-      return PlatformTextField(
-        obscureText: obscureText,
-        controller: controller,
-        android: (context) => MaterialTextFieldData(
-          decoration: InputDecoration(
-            prefix: prefix,
-            suffix: suffix,
-            prefixIcon: prefixIcon,
-            suffixIcon: suffixIcon,
-            border: inputBorder,
-          ),
-          style: style,
-        ),
-        ios: (context) => CupertinoTextFieldData(
-          prefix: prefix,
-          suffix: suffix,
-        ),
-      );
+          ));
     }
   }
 }
