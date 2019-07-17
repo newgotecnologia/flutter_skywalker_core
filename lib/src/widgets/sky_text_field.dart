@@ -14,6 +14,9 @@ class SkyTextField extends StatelessWidget {
   final bool obscureText;
   final bool deobscureTextIcon;
 
+  final double width;
+  final double height;
+
   final String label;
   final String mask;
 
@@ -46,6 +49,8 @@ class SkyTextField extends StatelessWidget {
     this.mask,
     this.onChanged = _defaultChangeCallback,
     this.labelColor = Colors.blue,
+    this.width,
+    this.height,
   }) : super(key: key);
 
   @override
@@ -71,7 +76,37 @@ class SkyTextField extends StatelessWidget {
               ),
             ),
           ),
-          FittedBox(
+          Container(
+            width: width,
+            height: height,
+            child: FittedBox(
+                fit: BoxFit.cover,
+                child: PlatformTextField(
+                  obscureText: obscureText,
+                  controller: controller,
+                  android: (context) => MaterialTextFieldData(
+                    decoration: InputDecoration(
+                      prefix: prefix,
+                      suffix: suffix,
+                      prefixIcon: prefixIcon,
+                      suffixIcon: suffixIcon,
+                      border: inputBorder,
+                    ),
+                    style: style,
+                  ),
+                  ios: (context) => CupertinoTextFieldData(
+                    prefix: prefix,
+                    suffix: suffix,
+                  ),
+                )),
+          )
+        ],
+      );
+    } else {
+      return Container(
+          width: width,
+          height: height,
+          child: FittedBox(
               fit: BoxFit.cover,
               child: PlatformTextField(
                 obscureText: obscureText,
@@ -90,30 +125,7 @@ class SkyTextField extends StatelessWidget {
                   prefix: prefix,
                   suffix: suffix,
                 ),
-              ))
-        ],
-      );
-    } else {
-      return FittedBox(
-          fit: BoxFit.cover,
-          child: PlatformTextField(
-            obscureText: obscureText,
-            controller: controller,
-            android: (context) => MaterialTextFieldData(
-              decoration: InputDecoration(
-                prefix: prefix,
-                suffix: suffix,
-                prefixIcon: prefixIcon,
-                suffixIcon: suffixIcon,
-                border: inputBorder,
-              ),
-              style: style,
-            ),
-            ios: (context) => CupertinoTextFieldData(
-              prefix: prefix,
-              suffix: suffix,
-            ),
-          ));
+              )));
     }
   }
 }
