@@ -6,6 +6,8 @@ class SkyDropdownButton extends StatefulWidget {
   final Color textColor;
   final Color dropdownIconColor;
   final double fontSize;
+  final double width;
+  final double height;
 
   const SkyDropdownButton({
     Key key,
@@ -13,10 +15,14 @@ class SkyDropdownButton extends StatefulWidget {
     this.textColor = Colors.black,
     this.dropdownIconColor = Colors.blue,
     this.fontSize = 15,
+    this.width,
+    this.height,
   }) : super(key: key);
 
   @override
   _SkyDropdownButtonState createState() => _SkyDropdownButtonState(
+        height: height,
+        width: width,
         items: items,
         textColor: textColor,
         fontSize: fontSize,
@@ -29,11 +35,18 @@ class _SkyDropdownButtonState extends State<SkyDropdownButton> {
   final Color textColor;
   final Color dropdownIconColor;
   final double fontSize;
+  final double width;
+  final double height;
   List<DropdownMenuItem<String>> _dropDownMenuItems;
   String _currentItem;
 
   _SkyDropdownButtonState(
-      {this.items, this.textColor, this.fontSize, this.dropdownIconColor});
+      {this.width,
+      this.height,
+      this.items,
+      this.textColor,
+      this.fontSize,
+      this.dropdownIconColor});
 
   @override
   void initState() {
@@ -44,20 +57,27 @@ class _SkyDropdownButtonState extends State<SkyDropdownButton> {
 
   @override
   Widget build(BuildContext context) {
-    return FittedBox(
-      fit: BoxFit.cover,
-      child: DropdownButton(
-        items: _dropDownMenuItems,
-        value: _currentItem,
-        onChanged: changedDropDownItem,
-        icon: Icon(
-          Icons.keyboard_arrow_down,
-          color: dropdownIconColor,
-        ),
-        style: TextStyle(fontSize: fontSize, color: textColor),
-        isDense: true,
-      ),
-    );
+    return Container(
+        width: width,
+        height: height,
+        decoration: BoxDecoration(
+            borderRadius: BorderRadius.all(Radius.circular(10)),
+            border: Border.all(color: Colors.grey, style: BorderStyle.solid)),
+        padding: EdgeInsets.symmetric(vertical: 10, horizontal: 10),
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: DropdownButton(
+            items: _dropDownMenuItems,
+            value: _currentItem,
+            onChanged: changedDropDownItem,
+            icon: Icon(
+              Icons.keyboard_arrow_down,
+              color: dropdownIconColor,
+            ),
+            style: TextStyle(fontSize: fontSize, color: textColor),
+            isDense: true,
+          ),
+        ));
   }
 
   List<DropdownMenuItem<String>> getDropDownMenuItems() {
