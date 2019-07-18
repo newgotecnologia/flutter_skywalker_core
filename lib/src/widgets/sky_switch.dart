@@ -24,20 +24,20 @@ class _SkySwitchState extends State<SkySwitch> {
 
   @override
   Widget build(BuildContext context) {
-    return //this goes in our State class as a global variable
-
-//this goes in as one of the children in our column
-        PlatformSwitch(
-      value: isSwitched,
-      onChanged: (value) {
-        setState(() {
-          isSwitched = value;
-        });
-      },
-      android: (context) {
-        return MaterialSwitchData(activeTrackColor: activeTrackColor);
-      },
-      activeColor: Colors.green,
+    return Container(
+      width: 60,
+      child: PlatformSwitch(
+        value: isSwitched,
+        onChanged: (value) {
+          setState(() {
+            isSwitched = value;
+          });
+        },
+        android: (context) {
+          return MaterialSwitchData(activeTrackColor: activeTrackColor);
+        },
+        activeColor: Colors.green,
+      ),
     );
   }
 }
