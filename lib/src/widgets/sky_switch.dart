@@ -7,7 +7,7 @@ class SkySwitch extends StatefulWidget {
   final Color activeColor;
 
   const SkySwitch(
-      {Key key, this.isSwitched, this.activeTrackColor, this.activeColor})
+      {Key key, this.isSwitched = false, this.activeTrackColor = Colors.lightBlue, this.activeColor = Colors.blue})
       : super(key: key);
 
   @override
@@ -36,7 +36,7 @@ class _SkySwitchState extends State<SkySwitch> {
         android: (context) {
           return MaterialSwitchData(activeTrackColor: activeTrackColor);
         },
-        activeColor: Colors.green,
+        activeColor: activeColor,
       ),
     );
   }
