@@ -2,10 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-// https://stackoverflow.com/a/50650274
-const _defaultInputBorder =
-    OutlineInputBorder(borderRadius: BorderRadius.all(Radius.circular(15)));
-
 void _defaultChangeCallback(String a, String b) {}
 
 typedef TextChangeCallback(String masked, String raw);
@@ -16,6 +12,7 @@ class SkyTextField extends StatelessWidget {
 
   final double verticalContentPadding;
   final double horizontalContentPadding;
+  final double borderRadius;
 
   final String label;
   final String mask;
@@ -29,7 +26,6 @@ class SkyTextField extends StatelessWidget {
 
   final TextInputType type;
   final TextAlign textAlign;
-  final OutlineInputBorder inputBorder;
   final TextStyle style;
   final TextChangeCallback onChanged;
 
@@ -40,7 +36,6 @@ class SkyTextField extends StatelessWidget {
     this.obscureText = false,
     this.deobscureTextIcon = false,
     this.textAlign = TextAlign.start,
-    this.inputBorder = _defaultInputBorder,
     this.prefix,
     this.suffix,
     this.prefixIcon,
@@ -51,6 +46,7 @@ class SkyTextField extends StatelessWidget {
     this.labelColor = Colors.blue,
     this.verticalContentPadding = 12,
     this.horizontalContentPadding = 8,
+    this.borderRadius = 10,
   }) : super(key: key);
 
   Widget _buildTextField(BuildContext context) {
@@ -69,7 +65,9 @@ class SkyTextField extends StatelessWidget {
           suffix: suffix,
           prefixIcon: prefixIcon,
           suffixIcon: suffixIcon,
-          border: inputBorder,
+          border: OutlineInputBorder(
+            borderRadius: BorderRadius.all(Radius.circular(borderRadius)),
+          ),
           contentPadding: EdgeInsets.symmetric(
             vertical: verticalContentPadding,
             horizontal: horizontalContentPadding,
