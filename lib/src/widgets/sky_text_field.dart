@@ -59,6 +59,7 @@ class SkyTextField extends StatelessWidget {
     return PlatformTextField(
       obscureText: obscureText,
       controller: controller,
+      keyboardType: type,
       android: (context) => MaterialTextFieldData(
         decoration: InputDecoration(
           prefix: prefix,
