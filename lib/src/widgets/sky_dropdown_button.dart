@@ -3,6 +3,10 @@ import 'package:flutter_skywalker_core/src/widgets/sky_text.dart';
 
 typedef String OptionTitleResolver<T>(T t);
 
+String _defaultTitleResolver(Object val) {
+  return val.toString();
+}
+
 // TODO: REFACTOR THIS TO USE CUPERTINO PICKER TOO
 
 class SkyDropdownButton<T> extends StatefulWidget {
@@ -15,7 +19,7 @@ class SkyDropdownButton<T> extends StatefulWidget {
   const SkyDropdownButton({
     Key key,
     this.items,
-    this.resolver,
+    this.resolver = _defaultTitleResolver,
     this.textColor = Colors.black,
     this.dropdownIconColor = Colors.blue,
     this.fontSize = 15,
