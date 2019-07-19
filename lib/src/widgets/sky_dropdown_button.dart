@@ -19,27 +19,6 @@ class SkyDropdownButton<T> extends StatefulWidget {
     this.fontSize = 15,
   }) : super(key: key);
 
-  static SkyDropdownButton<bool> yesOrNo({
-    yesTitle = "Yes",
-    noTitle = "No",
-    textColor = Colors.black,
-    dropdownIconColor = Colors.blue,
-    fontSize = 15,
-  }) {
-    return SkyDropdownButton<bool>(
-      textColor: textColor,
-      dropdownIconColor: dropdownIconColor,
-      fontSize: fontSize,
-      items: [true, false],
-      resolver: (bool val) {
-        if (val) {
-          return yesTitle;
-        }
-        return noTitle;
-      },
-    );
-  }
-
   @override
   _SkyDropdownButtonState createState() => _SkyDropdownButtonState<T>(
         items: items,
