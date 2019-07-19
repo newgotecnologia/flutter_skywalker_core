@@ -44,7 +44,7 @@ class SkyTextField extends StatelessWidget {
     this.mask,
     this.onChanged = _defaultChangeCallback,
     this.labelColor = Colors.blue,
-    this.verticalContentPadding = 12,
+    this.verticalContentPadding = 14,
     this.horizontalContentPadding = 8,
     this.borderRadius = 10,
   }) : super(key: key);
