@@ -46,6 +46,7 @@ class SkyDropdownButton<T> extends StatefulWidget {
         textColor: textColor,
         fontSize: fontSize,
         dropdownIconColor: dropdownIconColor,
+        resolver: resolver,
       );
 }
 
@@ -65,7 +66,7 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
     this.fontSize,
     this.dropdownIconColor,
     this.resolver,
-  });
+  }) : assert(null != resolver);
 
   @override
   void initState() {
