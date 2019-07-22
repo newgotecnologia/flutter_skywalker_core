@@ -24,7 +24,8 @@ class SkyTextField extends StatelessWidget {
   final Widget suffixIcon;
   final Widget prefixIcon;
 
-  final TextInputType type;
+  final TextInputType inputType;
+  final TextInputAction inputAction;
   final TextAlign textAlign;
   final TextStyle style;
   final TextChangeCallback onChanged;
@@ -32,7 +33,8 @@ class SkyTextField extends StatelessWidget {
   const SkyTextField({
     Key key,
     this.label = "",
-    this.type = TextInputType.text,
+    this.inputType = TextInputType.text,
+    this.inputAction,
     this.obscureText = false,
     this.deobscureTextIcon = false,
     this.textAlign = TextAlign.start,
@@ -59,7 +61,8 @@ class SkyTextField extends StatelessWidget {
     return PlatformTextField(
       obscureText: obscureText,
       controller: controller,
-      keyboardType: type,
+      keyboardType: inputType,
+      textInputAction: inputAction,
       android: (context) => MaterialTextFieldData(
         decoration: InputDecoration(
           prefix: prefix,
