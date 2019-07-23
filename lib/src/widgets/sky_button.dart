@@ -139,7 +139,7 @@ class SkyButton extends StatelessWidget {
       secondaryText: secondaryText,
     );
 
-    Widget button = PlatformButton(
+    return PlatformButton(
       padding: EdgeInsets.symmetric(
         horizontal: Dimen.horizontal_padding,
         vertical: Dimen.vertical_padding,
