@@ -94,7 +94,7 @@ class SkyButton extends StatelessWidget {
         topIconWidget,
         primaryTextWidget,
         secondaryTextWidget,
-      ].where((w) => null != w),
+      ].where((w) => null != w).toList(),
     );
 
     if (null != startIconWidget) {
