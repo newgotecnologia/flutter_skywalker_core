@@ -23,7 +23,7 @@ class SkyButton extends StatelessWidget {
   final int secondMaxLines;
   final Color secondColor;
   final FontWeight secondFontWeight;
-  final EdgeInsets buttonPadding;
+  final EdgeInsets padding;
 
   const SkyButton({
     Key key,
@@ -44,7 +44,7 @@ class SkyButton extends StatelessWidget {
     this.secondMaxLines = 1,
     this.secondColor = Colors.black,
     this.secondFontWeight = FontWeight.normal,
-    this.buttonPadding,
+    this.padding,
   })  : assert(null != text),
         super(key: key);
 
@@ -102,7 +102,7 @@ class SkyButton extends StatelessWidget {
 
     if (null != startIconWidget) {
       return Container(
-        padding: buttonPadding,
+        padding: padding,
         child: Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[startIconWidget, primaryColumn],
@@ -110,7 +110,7 @@ class SkyButton extends StatelessWidget {
       );
     } else {
       return Container(
-        padding: buttonPadding,
+        padding: padding,
         child: primaryColumn,
       );
     }
