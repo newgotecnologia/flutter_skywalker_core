@@ -15,7 +15,7 @@ class SkyButton extends StatelessWidget {
   final Color buttonColor;
   final FontWeight fontWeight;
   final Icon inlineIcon;
-  final Icon upsideIcon;
+  final Icon topIcon;
   final Color borderColor;
   final double iconRightPadding;
   final String secondText;
@@ -37,295 +37,124 @@ class SkyButton extends StatelessWidget {
     this.borderColor = Colors.white,
     this.iconRightPadding = 5,
     this.inlineIcon,
-    this.upsideIcon,
+    this.topIcon,
     this.secondText,
     this.secondFontSize = 12,
     this.secondMaxLines = 1,
     this.secondColor = Colors.black,
     this.secondFontWeight = FontWeight.normal,
-  }) : super(key: key);
+  })  : assert(null != text),
+        super(key: key);
+
+  /// There are 6 possible configurations to the button layout.
+  Widget _buildButtonLayout(
+      {Widget startIcon,
+      Widget topIcon,
+      SkyText primaryText,
+      SkyText secondaryText}) {
+    // We initialize in the 'inverse' order, as it is simpler
+    Widget primaryTextWidget,
+        secondaryTextWidget,
+        topIconWidget,
+        startIconWidget;
+
+    if (null != primaryText) {
+      primaryTextWidget = Container(
+        child: FittedBox(fit: BoxFit.cover, child: primaryText),
+      );
+    }
+
+    if (null != secondaryText) {
+      secondaryTextWidget = Container(
+        child: FittedBox(fit: BoxFit.cover, child: secondaryText),
+      );
+    }
+
+    if (null != startIcon) {
+      startIconWidget = Container(
+        padding: EdgeInsets.only(right: iconRightPadding),
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: startIcon,
+        ),
+      );
+    }
+
+    if (null != topIcon) {
+      topIconWidget = Container(
+        child: FittedBox(
+          fit: BoxFit.cover,
+          child: topIcon,
+        ),
+      );
+    }
+
+    Column primaryColumn = Column(
+      children: <Widget>[
+        topIconWidget,
+        primaryTextWidget,
+        secondaryTextWidget,
+      ].where((w) => null != w),
+    );
+
+    if (null != startIconWidget) {
+      return Row(
+        mainAxisAlignment: MainAxisAlignment.center,
+        children: <Widget>[startIconWidget, primaryColumn],
+      );
+    } else {
+      return primaryColumn;
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
-    if (inlineIcon != null && secondText == null) {
-      return PlatformButton(
-        padding: EdgeInsets.symmetric(
-          horizontal: Dimen.horizontal_padding,
-          vertical: Dimen.vertical_padding,
-        ),
-        color: buttonColor,
-        android: (context) {
-          return MaterialRaisedButtonData(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadius),
-              side: BorderSide(color: borderColor),
-            ),
-          );
-        },
-        child: Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              padding: EdgeInsets.only(right: iconRightPadding),
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: inlineIcon,
-              ),
-            ),
-            Container(
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: SkyText(
-                  text,
-                  fontSize: fontSize,
-                  key: key,
-                  maxLines: maxLines,
-                  textColor: textColor,
-                  fontWeight: fontWeight,
-                ),
-              ),
-            ),
-          ],
-        ),
-        onPressed: onPressed,
-      );
-    } else if (upsideIcon != null && secondText == null) {
-      return PlatformButton(
-        padding: EdgeInsets.symmetric(
-          horizontal: Dimen.horizontal_padding,
-          vertical: Dimen.vertical_padding,
-        ),
-        color: buttonColor,
-        android: (context) {
-          return MaterialRaisedButtonData(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadius),
-              side: BorderSide(color: borderColor),
-            ),
-          );
-        },
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: <Widget>[
-            Container(
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: upsideIcon,
-              ),
-            ),
-            Container(
-              child: FittedBox(
-                fit: BoxFit.cover,
-                child: SkyText(
-                  text,
-                  fontSize: fontSize,
-                  key: key,
-                  maxLines: maxLines,
-                  textColor: textColor,
-                  fontWeight: fontWeight,
-                ),
-              ),
-            ),
-          ],
-        ),
-        onPressed: onPressed,
-      );
-    } else if (secondText != null) {
-      if (inlineIcon != null) {
-        return PlatformButton(
-          padding: EdgeInsets.symmetric(
-            horizontal: Dimen.horizontal_padding,
-            vertical: Dimen.vertical_padding,
-          ),
-          color: buttonColor,
-          android: (context) {
-            return MaterialRaisedButtonData(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(borderRadius),
-                side: BorderSide(color: borderColor),
-              ),
-            );
-          },
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                padding: EdgeInsets.only(right: iconRightPadding),
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: inlineIcon,
-                ),
-              ),
-              Column(
-                children: <Widget>[
-                  Container(
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SkyText(
-                        text,
-                        fontSize: fontSize,
-                        key: key,
-                        maxLines: maxLines,
-                        textColor: textColor,
-                        fontWeight: fontWeight,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SkyText(
-                        secondText,
-                        fontSize: secondFontSize,
-                        key: key,
-                        maxLines: secondMaxLines,
-                        textColor: secondColor,
-                        fontWeight: secondFontWeight,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          onPressed: onPressed,
-        );
-      } else if (upsideIcon != null) {
-        return PlatformButton(
-          padding: EdgeInsets.symmetric(
-            horizontal: Dimen.horizontal_padding,
-            vertical: Dimen.vertical_padding,
-          ),
-          color: buttonColor,
-          android: (context) {
-            return MaterialRaisedButtonData(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(borderRadius),
-                side: BorderSide(color: borderColor),
-              ),
-            );
-          },
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.center,
-            crossAxisAlignment: CrossAxisAlignment.center,
-            children: <Widget>[
-              Container(
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: upsideIcon,
-                ),
-              ),
-              Column(
-                children: <Widget>[
-                  Container(
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SkyText(
-                        text,
-                        fontSize: fontSize,
-                        key: key,
-                        maxLines: maxLines,
-                        textColor: textColor,
-                        fontWeight: fontWeight,
-                      ),
-                    ),
-                  ),
-                  Container(
-                    child: FittedBox(
-                      fit: BoxFit.cover,
-                      child: SkyText(
-                        secondText,
-                        fontSize: secondFontSize,
-                        key: key,
-                        maxLines: secondMaxLines,
-                        textColor: secondColor,
-                        fontWeight: secondFontWeight,
-                      ),
-                    ),
-                  ),
-                ],
-              ),
-            ],
-          ),
-          onPressed: onPressed,
-        );
-      } else {
-        return PlatformButton(
-          padding: EdgeInsets.symmetric(
-            horizontal: Dimen.horizontal_padding,
-            vertical: Dimen.vertical_padding,
-          ),
-          color: buttonColor,
-          android: (context) {
-            return MaterialRaisedButtonData(
-              shape: RoundedRectangleBorder(
-                borderRadius: BorderRadius.circular(borderRadius),
-                side: BorderSide(color: borderColor),
-              ),
-            );
-          },
-          child: Column(
-            children: <Widget>[
-              Container(
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: SkyText(
-                    text,
-                    fontSize: fontSize,
-                    key: key,
-                    maxLines: maxLines,
-                    textColor: textColor,
-                    fontWeight: fontWeight,
-                  ),
-                ),
-              ),
-              Container(
-                child: FittedBox(
-                  fit: BoxFit.cover,
-                  child: SkyText(
-                    secondText,
-                    fontSize: secondFontSize,
-                    key: key,
-                    maxLines: secondMaxLines,
-                    textColor: secondColor,
-                    fontWeight: secondFontWeight,
-                  ),
-                ),
-              ),
-            ],
-          ),
-          onPressed: onPressed,
-        );
-      }
-    } else {
-      return PlatformButton(
-        padding: EdgeInsets.symmetric(
-          horizontal: Dimen.horizontal_padding,
-          vertical: Dimen.vertical_padding,
-        ),
-        color: buttonColor,
-        android: (context) {
-          return MaterialRaisedButtonData(
-            shape: RoundedRectangleBorder(
-              borderRadius: BorderRadius.circular(borderRadius),
-              side: BorderSide(color: borderColor),
-            ),
-          );
-        },
-        child: FittedBox(
-          fit: BoxFit.cover,
-          child: SkyText(
-            text,
-            fontSize: fontSize,
-            key: key,
-            maxLines: maxLines,
-            textColor: textColor,
-            fontWeight: fontWeight,
-          ),
-        ),
-        onPressed: onPressed,
+    Widget startIcon, topIcon;
+    SkyText primaryText, secondaryText;
+
+    if (null != this.text) {
+      primaryText = SkyText(
+        this.text,
+        fontSize: this.fontSize,
+        maxLines: this.maxLines,
+        textColor: this.textColor,
+        fontWeight: this.fontWeight,
       );
     }
+
+    if (null != this.secondText) {
+      secondaryText = SkyText(
+        this.secondText,
+        fontSize: this.secondFontSize,
+        maxLines: this.secondMaxLines,
+        textColor: this.secondColor,
+        fontWeight: this.secondFontWeight,
+      );
+    }
+
+    Widget content = _buildButtonLayout(
+      startIcon: startIcon,
+      topIcon: topIcon,
+      primaryText: primaryText,
+      secondaryText: secondaryText,
+    );
+
+    Widget button = PlatformButton(
+      padding: EdgeInsets.symmetric(
+        horizontal: Dimen.horizontal_padding,
+        vertical: Dimen.vertical_padding,
+      ),
+      color: buttonColor,
+      android: (context) {
+        return MaterialRaisedButtonData(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(borderRadius),
+            side: BorderSide(color: borderColor),
+          ),
+        );
+      },
+      child: content,
+      onPressed: onPressed,
+    );
   }
 }
