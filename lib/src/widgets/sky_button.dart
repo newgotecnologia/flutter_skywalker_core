@@ -90,6 +90,7 @@ class SkyButton extends StatelessWidget {
     }
 
     Column primaryColumn = Column(
+      mainAxisAlignment: MainAxisAlignment.center,
       children: <Widget>[
         topIconWidget,
         primaryTextWidget,
@@ -109,7 +110,6 @@ class SkyButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    Widget startIcon, topIcon;
     SkyText primaryText, secondaryText;
 
     if (null != this.text) {
@@ -133,17 +133,13 @@ class SkyButton extends StatelessWidget {
     }
 
     Widget content = _buildButtonLayout(
-      startIcon: startIcon,
-      topIcon: topIcon,
+      startIcon: this.inlineIcon,
+      topIcon: this.topIcon,
       primaryText: primaryText,
       secondaryText: secondaryText,
     );
 
     return PlatformButton(
-      padding: EdgeInsets.symmetric(
-        horizontal: Dimen.horizontal_padding,
-        vertical: Dimen.vertical_padding,
-      ),
       color: buttonColor,
       android: (context) {
         return MaterialRaisedButtonData(
