@@ -12,6 +12,8 @@ Future<T> showSkyConfirmPopup<T>(
   String content,
   String confirmOptionTitle,
   VoidCallback onConfirm, {
+  Color titleColor = Colors.black,
+  Color contentColor = Colors.black,
   String cancelOptionTitle,
   VoidCallback onCancel,
   Color confirmOptionButtonBackgroundColor = Colors.green,
@@ -25,6 +27,7 @@ Future<T> showSkyConfirmPopup<T>(
     style: TextStyle(
       fontSize: titleFontSize,
       fontWeight: FontWeight.bold,
+      color: titleColor,
     ),
   );
 
@@ -32,6 +35,7 @@ Future<T> showSkyConfirmPopup<T>(
     content,
     style: TextStyle(
       fontSize: messageFontSize,
+      color: contentColor,
     ),
     textAlign: TextAlign.center,
   );
