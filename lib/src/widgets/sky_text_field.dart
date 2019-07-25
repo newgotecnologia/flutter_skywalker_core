@@ -7,6 +7,8 @@ void _defaultChangeCallback(String a, String b) {}
 typedef TextChangeCallback(String masked, String raw);
 
 class SkyTextField extends StatelessWidget {
+  final int maxLines;
+
   final bool obscureText;
   final bool deobscureTextIcon;
 
@@ -49,6 +51,7 @@ class SkyTextField extends StatelessWidget {
     this.verticalContentPadding = 14,
     this.horizontalContentPadding = 8,
     this.borderRadius = 10,
+    this.maxLines = 1,
   }) : super(key: key);
 
   Widget _buildTextField(BuildContext context) {
@@ -59,6 +62,7 @@ class SkyTextField extends StatelessWidget {
     }
 
     return PlatformTextField(
+      maxLines: maxLines,
       obscureText: obscureText,
       controller: controller,
       keyboardType: inputType,
