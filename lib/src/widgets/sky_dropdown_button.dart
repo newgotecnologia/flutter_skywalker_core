@@ -7,8 +7,6 @@ String _defaultTitleResolver(Object val) {
   return val.toString();
 }
 
-void _onChanged(Object val) {}
-
 // TODO: REFACTOR THIS TO USE CUPERTINO PICKER TOO
 
 class SkyDropdownButton<T> extends StatefulWidget {
@@ -17,7 +15,6 @@ class SkyDropdownButton<T> extends StatefulWidget {
   final Color dropdownIconColor;
   final double fontSize;
   final OptionTitleResolver<T> resolver;
-  final Function onChanged;
 
   const SkyDropdownButton({
     Key key,
@@ -26,7 +23,6 @@ class SkyDropdownButton<T> extends StatefulWidget {
     this.textColor = Colors.black,
     this.dropdownIconColor = Colors.blue,
     this.fontSize = 15,
-    this.onChanged = _onChanged,
   }) : super(key: key);
 
   @override
@@ -36,7 +32,6 @@ class SkyDropdownButton<T> extends StatefulWidget {
         fontSize: fontSize,
         dropdownIconColor: dropdownIconColor,
         resolver: resolver,
-        onChanged: onChanged,
       );
 }
 
@@ -46,13 +41,11 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
   final Color dropdownIconColor;
   final double fontSize;
   final OptionTitleResolver<T> resolver;
-  final Function onChanged;
 
   List<DropdownMenuItem<T>> _dropDownMenuItems;
   T _currentItem;
 
   _SkyDropdownButtonState({
-    this.onChanged,
     this.items,
     this.textColor,
     this.fontSize,
@@ -109,7 +102,6 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
 
   void changedDropDownItem(T selectedOption) {
     setState(() {
-      onChanged(selectedOption);
       _currentItem = selectedOption;
     });
   }
