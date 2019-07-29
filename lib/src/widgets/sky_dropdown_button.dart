@@ -108,8 +108,8 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
   }
 
   void changedDropDownItem(T selectedOption) {
-    onChanged(selectedOption);
     setState(() {
+      onChanged(selectedOption);
       _currentItem = selectedOption;
     });
   }
