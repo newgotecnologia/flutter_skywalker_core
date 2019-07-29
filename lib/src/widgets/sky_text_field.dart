@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-void _defaultChangeCallback(String a, String b) {}
+void _defaultChangeCallback(String a) {}
 
-typedef TextChangeCallback(String masked, String raw);
+typedef TextChangeCallback(String raw);
 
 class SkyTextField extends StatelessWidget {
   final int maxLines;
@@ -62,6 +62,7 @@ class SkyTextField extends StatelessWidget {
     }
 
     return PlatformTextField(
+      onChanged: onChanged,
       maxLines: maxLines,
       obscureText: obscureText,
       controller: controller,
