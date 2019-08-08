@@ -157,6 +157,12 @@ class SkyButton extends StatelessWidget {
           ),
         );
       },
+      ios: (context){
+        return CupertinoButtonData(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+          borderRadius: BorderRadius.circular(borderRadius),
+        );
+      },
       child: content,
       onPressed: onPressed,
     );
