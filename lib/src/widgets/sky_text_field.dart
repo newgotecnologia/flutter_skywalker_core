@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
@@ -31,6 +32,7 @@ class SkyTextField extends StatelessWidget {
   final TextAlign textAlign;
   final TextStyle style;
   final TextChangeCallback onChanged;
+  final List<TextInputFormatter> inputFormatter;
 
   const SkyTextField({
     Key key,
@@ -52,6 +54,7 @@ class SkyTextField extends StatelessWidget {
     this.horizontalContentPadding = 8,
     this.borderRadius = 10,
     this.maxLines = 1,
+    this.inputFormatter,
   }) : super(key: key);
 
   Widget _buildTextField(BuildContext context) {
@@ -68,6 +71,7 @@ class SkyTextField extends StatelessWidget {
       controller: controller,
       keyboardType: inputType,
       textInputAction: inputAction,
+      inputFormatters: inputFormatter,
       android: (context) => MaterialTextFieldData(
         decoration: InputDecoration(
           prefix: prefix,
