@@ -65,7 +65,7 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
   @override
   void initState() {
     _dropDownMenuItems = _buildDropdownItems();
-    currentItem = _dropDownMenuItems[0].value;
+    currentItem = currentItem ?? _dropDownMenuItems[0].value;
     super.initState();
   }
 
