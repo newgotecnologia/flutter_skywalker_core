@@ -34,6 +34,8 @@ class SkyTextField extends StatelessWidget {
   final TextChangeCallback onChanged;
   final List<TextInputFormatter> inputFormatter;
 
+  final TextEditingController controller;
+
   const SkyTextField({
     Key key,
     this.label = "",
@@ -55,15 +57,10 @@ class SkyTextField extends StatelessWidget {
     this.borderRadius = 10,
     this.maxLines = 1,
     this.inputFormatter,
+    this.controller,
   }) : super(key: key);
 
   Widget _buildTextField(BuildContext context) {
-    TextEditingController controller;
-
-    if (null != this.mask) {
-      controller = MaskedTextController(mask: mask);
-    }
-
     return PlatformTextField(
       onChanged: onChanged,
       maxLines: maxLines,
