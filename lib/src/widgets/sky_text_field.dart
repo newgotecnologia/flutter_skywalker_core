@@ -1,11 +1,15 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
+import 'package:flutter_masked_text/flutter_masked_text.dart';
 import 'package:flutter_platform_widgets/flutter_platform_widgets.dart';
 
-void _defaultChangeCallback(String a, String b) {}
+void _defaultChangeCallback(String a) {}
 
-typedef TextChangeCallback(String masked, String raw);
+typedef TextChangeCallback(String raw);
 
 class SkyTextField extends StatelessWidget {
+  final int maxLines;
+
   final bool obscureText;
   final bool deobscureTextIcon;
 
@@ -28,6 +32,7 @@ class SkyTextField extends StatelessWidget {
   final TextAlign textAlign;
   final TextStyle style;
   final TextChangeCallback onChanged;
+  final List<TextInputFormatter> inputFormatter;
 
   final TextEditingController controller;
 
@@ -50,15 +55,20 @@ class SkyTextField extends StatelessWidget {
     this.verticalContentPadding = 14,
     this.horizontalContentPadding = 8,
     this.borderRadius = 10,
+    this.maxLines = 1,
+    this.inputFormatter,
     this.controller,
   }) : super(key: key);
 
   Widget _buildTextField(BuildContext context) {
     return PlatformTextField(
+      onChanged: onChanged,
+      maxLines: maxLines,
       obscureText: obscureText,
       controller: controller,
       keyboardType: inputType,
       textInputAction: inputAction,
+      inputFormatters: inputFormatter,
       android: (context) => MaterialTextFieldData(
         decoration: InputDecoration(
           prefix: prefix,

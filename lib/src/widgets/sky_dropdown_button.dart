@@ -15,6 +15,8 @@ class SkyDropdownButton<T> extends StatefulWidget {
   final Color dropdownIconColor;
   final double fontSize;
   final OptionTitleResolver<T> resolver;
+  final Function onChanged;
+  final T currentItem;
 
   const SkyDropdownButton({
     Key key,
@@ -23,6 +25,8 @@ class SkyDropdownButton<T> extends StatefulWidget {
     this.textColor = Colors.black,
     this.dropdownIconColor = Colors.blue,
     this.fontSize = 15,
+    this.onChanged,
+    this.currentItem,
   }) : super(key: key);
 
   @override
@@ -32,6 +36,8 @@ class SkyDropdownButton<T> extends StatefulWidget {
         fontSize: fontSize,
         dropdownIconColor: dropdownIconColor,
         resolver: resolver,
+        onChanged: onChanged,
+        currentItem: currentItem,
       );
 }
 
@@ -41,22 +47,25 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
   final Color dropdownIconColor;
   final double fontSize;
   final OptionTitleResolver<T> resolver;
+  final Function onChanged;
 
   List<DropdownMenuItem<T>> _dropDownMenuItems;
-  T _currentItem;
+  T currentItem;
 
   _SkyDropdownButtonState({
+    this.onChanged,
     this.items,
     this.textColor,
     this.fontSize,
     this.dropdownIconColor,
     this.resolver,
+    this.currentItem,
   }) : assert(null != resolver);
 
   @override
   void initState() {
     _dropDownMenuItems = _buildDropdownItems();
-    _currentItem = _dropDownMenuItems[0].value;
+    currentItem = currentItem ?? _dropDownMenuItems[0].value;
     super.initState();
   }
 
@@ -69,7 +78,7 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
         child: DropdownButtonHideUnderline(
           child: DropdownButton(
             items: _dropDownMenuItems,
-            value: _currentItem,
+            value: currentItem,
             onChanged: changedDropDownItem,
             icon: Icon(
               Icons.keyboard_arrow_down,
@@ -101,8 +110,9 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
   }
 
   void changedDropDownItem(T selectedOption) {
+    onChanged(selectedOption);
     setState(() {
-      _currentItem = selectedOption;
+      currentItem = selectedOption;
     });
   }
 }

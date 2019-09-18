@@ -23,6 +23,7 @@ class SkyButton extends StatelessWidget {
   final int secondMaxLines;
   final Color secondColor;
   final FontWeight secondFontWeight;
+  final EdgeInsets padding;
 
   const SkyButton({
     Key key,
@@ -43,6 +44,7 @@ class SkyButton extends StatelessWidget {
     this.secondMaxLines = 1,
     this.secondColor = Colors.black,
     this.secondFontWeight = FontWeight.normal,
+    this.padding,
   })  : assert(null != text),
         super(key: key);
 
@@ -99,12 +101,18 @@ class SkyButton extends StatelessWidget {
     );
 
     if (null != startIconWidget) {
-      return Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children: <Widget>[startIconWidget, primaryColumn],
+      return Container(
+        padding: padding,
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[startIconWidget, primaryColumn],
+        ),
       );
     } else {
-      return primaryColumn;
+      return Container(
+        padding: padding,
+        child: primaryColumn,
+      );
     }
   }
 
@@ -147,6 +155,12 @@ class SkyButton extends StatelessWidget {
             borderRadius: BorderRadius.circular(borderRadius),
             side: BorderSide(color: borderColor),
           ),
+        );
+      },
+      ios: (context){
+        return CupertinoButtonData(
+          padding: EdgeInsets.symmetric(vertical: 5, horizontal: 25),
+          borderRadius: BorderRadius.circular(borderRadius),
         );
       },
       child: content,
