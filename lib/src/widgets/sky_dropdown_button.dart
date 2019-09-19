@@ -17,6 +17,8 @@ class SkyDropdownButton<T> extends StatefulWidget {
   final OptionTitleResolver<T> resolver;
   final Function onChanged;
   final T currentItem;
+  final bool createFriendlyFirstItem;
+  final String friendlyFirstItemText;
 
   const SkyDropdownButton({
     Key key,
@@ -27,6 +29,8 @@ class SkyDropdownButton<T> extends StatefulWidget {
     this.fontSize = 15,
     this.onChanged,
     this.currentItem,
+    this.createFriendlyFirstItem = false,
+    this.friendlyFirstItemText,
   }) : super(key: key);
 
   @override
@@ -38,6 +42,8 @@ class SkyDropdownButton<T> extends StatefulWidget {
         resolver: resolver,
         onChanged: onChanged,
         currentItem: currentItem,
+        createFriendlyFirstItem: createFriendlyFirstItem,
+        friendlyFirstItemText: friendlyFirstItemText,
       );
 }
 
@@ -48,6 +54,8 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
   final double fontSize;
   final OptionTitleResolver<T> resolver;
   final Function onChanged;
+  final bool createFriendlyFirstItem;
+  final String friendlyFirstItemText;
 
   List<DropdownMenuItem<T>> _dropDownMenuItems;
   T currentItem;
@@ -60,12 +68,18 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
     this.dropdownIconColor,
     this.resolver,
     this.currentItem,
+    this.createFriendlyFirstItem,
+    this.friendlyFirstItemText,
   }) : assert(null != resolver);
 
   @override
   void initState() {
     _dropDownMenuItems = _buildDropdownItems();
-    currentItem = currentItem ?? _dropDownMenuItems[0].value;
+
+    if (!createFriendlyFirstItem) {
+      currentItem = currentItem ?? _dropDownMenuItems[0].value;
+    }
+
     super.initState();
   }
 
@@ -94,20 +108,31 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
 
   List<DropdownMenuItem<T>> _buildDropdownItems() {
     List<DropdownMenuItem<T>> items = List();
+
+    if (this.createFriendlyFirstItem) {
+      items.add(_createDropdownMenuItem(null, title: friendlyFirstItemText));
+    }
+
     for (T item in this.items) {
       // here we are creating the drop down menu items, you can customize the item right here
       // but I'll just use a simple text for this
-      items.add(DropdownMenuItem(
-        value: item,
-        child: SkyText(
-          resolver(item),
-          textColor: textColor,
-          fontSize: fontSize,
-        ),
-      ));
+      items.add(_createDropdownMenuItem(item));
     }
     return items;
   }
+
+  DropdownMenuItem<T> _createDropdownMenuItem(
+    T item, {
+    String title,
+  }) =>
+      DropdownMenuItem(
+        value: item,
+        child: SkyText(
+          title ?? resolver(item),
+          textColor: textColor,
+          fontSize: fontSize,
+        ),
+      );
 
   void changedDropDownItem(T selectedOption) {
     onChanged(selectedOption);
