@@ -3,11 +3,9 @@ import 'package:flutter_skywalker_core/src/widgets/sky_text.dart';
 
 typedef String OptionTitleResolver<T>(T t);
 
-String _defaultTitleResolver(Object val) => val.toString();
-
-typedef bool OptionComparator<T>(T a, T b);
-
-bool _defaultOptionComparator(Object a, Object b) => a == b;
+String _defaultTitleResolver(Object val) {
+  return val.toString();
+}
 
 // TODO: REFACTOR THIS TO USE CUPERTINO PICKER TOO
 
@@ -17,7 +15,6 @@ class SkyDropdownButton<T> extends StatefulWidget {
   final Color dropdownIconColor;
   final double fontSize;
   final OptionTitleResolver<T> resolver;
-  final OptionComparator<T> comparator;
   final Function onChanged;
   final T currentItem;
   final bool createFriendlyFirstItem;
@@ -27,7 +24,6 @@ class SkyDropdownButton<T> extends StatefulWidget {
     Key key,
     this.items,
     this.resolver = _defaultTitleResolver,
-    this.comparator = _defaultOptionComparator,
     this.textColor = Colors.black,
     this.dropdownIconColor = Colors.blue,
     this.fontSize = 15,
@@ -57,7 +53,6 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
   final Color dropdownIconColor;
   final double fontSize;
   final OptionTitleResolver<T> resolver;
-  final OptionComparator<T> comparator;
   final Function onChanged;
   final bool createFriendlyFirstItem;
   final String friendlyFirstItemText;
@@ -72,7 +67,6 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
     this.fontSize,
     this.dropdownIconColor,
     this.resolver,
-    this.comparator,
     this.currentItem,
     this.createFriendlyFirstItem,
     this.friendlyFirstItemText,
@@ -112,8 +106,8 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
     );
   }
 
-  List<SkyDropdownMenuItem<T>> _buildDropdownItems() {
-    List<SkyDropdownMenuItem<T>> items = List();
+  List<DropdownMenuItem<T>> _buildDropdownItems() {
+    List<DropdownMenuItem<T>> items = List();
 
     if (this.createFriendlyFirstItem) {
       items.add(_createDropdownMenuItem(null, title: friendlyFirstItemText));
@@ -127,11 +121,11 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
     return items;
   }
 
-  SkyDropdownMenuItem<T> _createDropdownMenuItem(
+  DropdownMenuItem<T> _createDropdownMenuItem(
     T item, {
     String title,
   }) =>
-      SkyDropdownMenuItem(
+      DropdownMenuItem(
         value: item,
         child: SkyText(
           title ?? resolver(item),
@@ -145,26 +139,5 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
     setState(() {
       currentItem = selectedOption;
     });
-  }
-}
-
-class SkyDropdownMenuItem<T> extends DropdownMenuItem<T> {
-  final OptionComparator<T> comparator;
-
-  SkyDropdownMenuItem({
-    T value,
-    Widget child,
-    this.comparator,
-  }) : super(
-          value: value,
-          child: child,
-        );
-
-  @override
-  bool operator ==(other) {
-    if (other is SkyDropdownMenuItem) {
-      return this.comparator(this.value, other.value);
-    }
-    return false;
   }
 }
