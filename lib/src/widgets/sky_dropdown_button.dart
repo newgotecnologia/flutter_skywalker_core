@@ -18,6 +18,7 @@ class SkyDropdownButton<T> extends StatefulWidget {
   final Function onChanged;
   final T currentItem;
   final bool createFriendlyFirstItem;
+  final bool isExpanded;
   final String friendlyFirstItemText;
 
   const SkyDropdownButton({
@@ -30,6 +31,7 @@ class SkyDropdownButton<T> extends StatefulWidget {
     this.onChanged,
     this.currentItem,
     this.createFriendlyFirstItem = false,
+    this.isExpanded = false,
     this.friendlyFirstItemText,
   }) : super(key: key);
 
@@ -42,7 +44,8 @@ class SkyDropdownButton<T> extends StatefulWidget {
         resolver: resolver,
         onChanged: onChanged,
         currentItem: currentItem,
-        createFriendlyFirstItem: createFriendlyFirstItem,
+        isExpanded: isExpanded ?? false,
+        createFriendlyFirstItem: createFriendlyFirstItem ?? false,
         friendlyFirstItemText: friendlyFirstItemText,
       );
 }
@@ -54,6 +57,7 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
   final double fontSize;
   final OptionTitleResolver<T> resolver;
   final Function onChanged;
+  final bool isExpanded;
   final bool createFriendlyFirstItem;
   final String friendlyFirstItemText;
 
@@ -67,6 +71,7 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
     this.fontSize,
     this.dropdownIconColor,
     this.resolver,
+    this.isExpanded,
     this.currentItem,
     this.createFriendlyFirstItem,
     this.friendlyFirstItemText,
@@ -91,6 +96,7 @@ class _SkyDropdownButtonState<T> extends State<SkyDropdownButton<T>> {
         fit: BoxFit.contain,
         child: DropdownButtonHideUnderline(
           child: DropdownButton(
+            isExpanded: isExpanded,
             items: _dropDownMenuItems,
             value: currentItem,
             onChanged: changedDropDownItem,
